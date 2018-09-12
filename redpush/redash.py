@@ -111,6 +111,18 @@ class Redash:
                     dash_list = self.Put_Visualization(visualization, old_query, dash_list)
             # print(response)
 
+            if old_query == None:
+                self.Execute_Query(response)
+
+    def Execute_Query(self, query):
+        """
+            Once a query is created we need to try to query the results so redash executes it and also
+            the scheduled ones get noticed.
+        """
+        headers = {'Authorization': 'Key {}'.format(self.api_key)}
+        path = "{}/api/query_results".format(self.url)
+        requests.post(path, headers=headers, json=query)
+
     def Archive_Missing_Queries(self, server_queries, new_queries):
         """
             Make a diff between server_queries and the new_queries,
