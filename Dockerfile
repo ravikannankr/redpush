@@ -1,4 +1,4 @@
-FROM comptel/docker-alpine-python:alpine3.7-3.6
+FROM comptel/docker-alpine-python:alpine3.7-366
 
 ENV DESTDIR="/opt/redpush"
 
