@@ -7,9 +7,9 @@ setup(
     include_package_data=True,
     packages=['redpush'],
     install_requires=[
-        'click',
-        'requests',
-        'ruamel.yaml'
+        'click==6.7',
+        'requests==2.18.4',
+        'ruamel.yaml==0.15.37'
     ],
     entry_points='''
         [console_scripts]
