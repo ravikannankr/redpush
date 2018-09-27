@@ -108,7 +108,7 @@ You can easily run redpush from Docker, so you don't need to install the correct
 docker run -v /Path/To/Your/conf:/conf comptel/redpush:master push  --redash-url http://host.docker.internal:5000 --api-key YOUR_USER_KEY -i /conf/my_conf_file.yaml
 ```
 
-Of course you might need to change the URL to the correct one (the above works if your use the docker-compose file to run redash locally), you user key, the the paths.
+Of course you might need to change the URL to the correct one (the above works if your use the docker-compose file to run redash locally), you user key, the paths.
 
 ## Development
 
