@@ -100,6 +100,16 @@ This is to serialize the dashboards from a redash server to  _yaml_. More for de
     name: Chart
 ```
 
+## Executing it in Docker
+
+You can easily run redpush from Docker, so you don't need to install the correct Python, virtualenv etc. To do so you can do something similar to:
+
+```
+docker run -v /Path/To/Your/conf:/conf comptel/redpush:master push  --redash-url http://host.docker.internal:5000 --api-key YOUR_USER_KEY -i /conf/my_conf_file.yaml
+```
+
+Of course you might need to change the URL to the correct one (the above works if your use the docker-compose file to run redash locally), you user key, the the paths.
+
 ## Development
 
 The easiest way to use this project is using docker and virtualenv.
@@ -114,7 +124,7 @@ If you want to to start over the server, you can:
 
 1. `docker-compose kill`
 2. `docker-compose rm -v` to remove the volumes
-3. `rm -rf clickhouse-data/ postgres-data/` to remove the data of the dbs
+3. `rm -rf postgres-data/` to remove the data of the dbs
 4. Create everything again
 
 ## Tricks used
@@ -125,6 +135,5 @@ Redash API is created to be used from a web UI tool, not from a tool like this. 
 ## TODOs
 
 - Error handling. Currently it doesn't handle the errors and expects everything to go smooth. _Wishful thinking_
-- Creating new widgets doesn't mean that they will work, they need to be executed at least once. So far it needs to be done in the UI
 - More documentation and examples
 - Layouting tool isn't very flexible, and has some bugs
