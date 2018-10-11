@@ -337,13 +337,16 @@ class Redash:
 
         """
         headers = {'Authorization': 'Key {}'.format(self.api_key)}
-        path = "{}/api/dashboards".format(self.url)
+        path = "{}/api/dashboards?page=1&page_size=100".format(self.url)
         dash_id_list = requests.get(path, headers=headers).json()
 
         path_id_template = "{}/api/dashboards/{}"
         dashboards = []
         # now we get the details
-        for dash_id in dash_id_list:
+        if 'results' not in dash_id_list: # in redash 5 the api has changed, they come in the results object
+            return dashboards
+        for dash_id in dash_id_list['results']:
+            print('id', dash_id)
             slug = dash_id['slug']
             path_id = path_id_template.format(self.url, slug)
             dashboard = requests.get(path_id, headers=headers).json()
