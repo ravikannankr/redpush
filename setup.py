@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='redpush',
-    version='0.1',
+    version='0.3',
     py_modules=['cli'],
     include_package_data=True,
     packages=['redpush'],
