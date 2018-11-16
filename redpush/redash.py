@@ -95,6 +95,28 @@ class Redash:
             query['options']['redpush_id'] = redpush_id
             query['is_draft'] = False
             query['is_archived'] = False
+
+            # if a query has params, we accept subqueries with redpush_id, but we need to convert it
+            if 'parameters' in query['options']:
+                missingSubQuery = False
+                for param in query['options']['parameters']:
+                    if 'redpush_id' in param:
+                        sub_redpush_id = param['redpush_id']
+                        param.pop('redpush_id', None)
+                        sub_real_id = self.find_by_redpush_id(old_queries, sub_redpush_id)
+                        if sub_real_id == None:
+                            # The linked query it is not yet deployed, or wrong. 
+                            print('Subquery not found', sub_redpush_id)
+                            missingSubQuery = True
+                            break
+                        else:
+                            param['queryId'] = sub_real_id['id']
+                if missingSubQuery:
+                    # there was a missing subquery, so we don't push this query
+                    print('Query with missing subqueries, ignored')
+                    continue
+
+            visualizations = None
             if 'visualizations' in query:
                 visualizations = query['visualizations']
                 # visualizations need to be uploaded in a diff call
